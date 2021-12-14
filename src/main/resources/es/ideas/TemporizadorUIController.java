@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
@@ -47,15 +49,23 @@ public class TemporizadorUIController implements Initializable {
         tl.getKeyFrames().add(kf);       
     }    
 
+    /**
+     * Establecer el icono de los botones por código mediante un imageView
+     * @param event 
+     */
     @FXML
     private void btnIniciarAccion(ActionEvent event) {
+        //Obtener el hijo 0 del botón (imageView)
+        ImageView iv = (ImageView)btnIniciar.getChildrenUnmodifiable().get(0);
         if (btnIniciar.isSelected()){
-            btnIniciar.setText("Parar");
+            iv.setImage(new Image(TemporizadorUIController.class
+                    .getResourceAsStream("pictures/pause.png")));
             tl.play();
         }else{
-            btnIniciar.setText("Iniciar");
+            iv.setImage(new Image(TemporizadorUIController.class
+                    .getResourceAsStream("pictures/play.png")));
+            
             tl.pause();
         }
-    }
-    
+    }    
 }

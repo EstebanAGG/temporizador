@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ideas.TemporizadorUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/mainStyles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ideas.TemporizadorUIController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="87.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,7 +24,11 @@
                <children>
                   <StackPane prefHeight="312.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="lbContador" text="0:00:00" textAlignment="CENTER" />
+                        <Label fx:id="lbContador" text="0:00:00" textAlignment="CENTER">
+                           <styleClass>
+                              <String fx:value="estilo_digital" />
+                              <String fx:value="contador" />
+                           </styleClass></Label>
                      </children>
                   </StackPane>
                </children>
@@ -56,27 +63,47 @@
                         </StackPane>
                         <AnchorPane GridPane.rowIndex="1">
                            <children>
-                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <styleClass>
+                                    <String fx:value="estilo_digital" />
+                                    <String fx:value="configuradores" />
+                                 </styleClass></TextField>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <styleClass>
+                                    <String fx:value="estilo_digital" />
+                                    <String fx:value="configuradores" />
+                                 </styleClass></TextField>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <children>
-                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <styleClass>
+                                    <String fx:value="estilo_digital" />
+                                    <String fx:value="configuradores" />
+                                 </styleClass></TextField>
                            </children>
                         </AnchorPane>
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
-            <ButtonBar>
+            <ButtonBar buttonMinWidth="20.0">
                <buttons>
-                  <ToggleButton fx:id="btnIniciar" mnemonicParsing="false" onAction="#btnIniciarAccion" text="Iniciar" />
-                  <Button mnemonicParsing="false" text="Establecer" />
+                  <ToggleButton fx:id="btnIniciar" contentDisplay="GRAPHIC_ONLY" maxWidth="40.0" mnemonicParsing="false" onAction="#btnIniciarAccion" prefWidth="20.0" text="Iniciar">
+                     <graphic>
+                        <ImageView blendMode="COLOR_BURN" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@pictures/play.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Establecer" textOverrun="CLIP">
+                  </Button>
                   <Button mnemonicParsing="false" text="Button" />
                </buttons>
             </ButtonBar>
