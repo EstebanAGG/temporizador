@@ -7,7 +7,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : deymian
 */
 @font-face{
-    src: url("fonts/ds-digi.ttf");
+    src: url("../fonts/ds-digi.ttf");
 }
 .root{
     -fx-base: #801515;

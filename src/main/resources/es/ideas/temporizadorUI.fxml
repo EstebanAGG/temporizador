@@ -22,7 +22,7 @@
          <children>
             <AnchorPane VBox.vgrow="SOMETIMES">
                <children>
-                  <StackPane prefHeight="312.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <StackPane fx:id="lblContador" prefHeight="312.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label fx:id="lbContador" text="0:00:00" textAlignment="CENTER">
                            <styleClass>
@@ -63,7 +63,7 @@
                         </StackPane>
                         <AnchorPane GridPane.rowIndex="1">
                            <children>
-                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TextField fx:id="txtHoras" alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <styleClass>
                                     <String fx:value="estilo_digital" />
                                     <String fx:value="configuradores" />
@@ -72,7 +72,7 @@
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TextField fx:id="txtMinutos" alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <styleClass>
                                     <String fx:value="estilo_digital" />
                                     <String fx:value="configuradores" />
@@ -81,7 +81,7 @@
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <children>
-                              <TextField alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TextField fx:id="txtSegundos" alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <styleClass>
                                     <String fx:value="estilo_digital" />
                                     <String fx:value="configuradores" />
@@ -96,15 +96,28 @@
                <buttons>
                   <ToggleButton fx:id="btnIniciar" contentDisplay="GRAPHIC_ONLY" maxWidth="40.0" mnemonicParsing="false" onAction="#btnIniciarAccion" prefWidth="20.0" text="Iniciar">
                      <graphic>
-                        <ImageView blendMode="COLOR_BURN" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView blendMode="COLOR_BURN" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@pictures/play.png" />
                            </image>
                         </ImageView>
                      </graphic></ToggleButton>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Establecer" textOverrun="CLIP">
-                  </Button>
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button fx:id="btnLoad" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxWidth="40.0" mnemonicParsing="false" onAction="#btnLoadAction" prefWidth="20.0" text="Establecer" textOverrun="CLIP">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@pictures/load.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="btnReset" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#btnResetAction" text="Button">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@pictures/reset.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </buttons>
             </ButtonBar>
          </children>
