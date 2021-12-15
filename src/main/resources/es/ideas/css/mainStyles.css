@@ -1,0 +1,31 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 14 dic 2021, 12:54:11
+    Author     : deymian
+*/
+@font-face{
+    src: url("../fonts/ds-digi.ttf");
+}
+.root{
+    -fx-base: #801515;
+}
+
+.estilo_digital{
+    -fx-font-family: "DS-DIGITAL"
+}
+
+.contador{
+    -fx-font-size: 12em;
+}
+
+.configuradores{
+    -fx-font-size: 5em;
+}
+
+.button{
+   /* -fx-graphic: url('../pictures/play.png');*/
+}
+
