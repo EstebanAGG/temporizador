@@ -22,9 +22,9 @@
          <children>
             <AnchorPane VBox.vgrow="SOMETIMES">
                <children>
-                  <StackPane fx:id="lblContador" prefHeight="312.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <StackPane prefHeight="312.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="lbContador" text="0:00:00" textAlignment="CENTER">
+                        <Label fx:id="lbContador" text="00:00:00" textAlignment="CENTER">
                            <styleClass>
                               <String fx:value="estilo_digital" />
                               <String fx:value="contador" />
