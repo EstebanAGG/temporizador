@@ -117,7 +117,7 @@ public class TemporizadorUIController implements Initializable {
                 if (nuevo.length() > 2) {
                     txtHoras.setText(viejo);
                 } else if ((nuevo.length() != 0)
-                        && ((Integer.decode(nuevo) > 23) || (Integer.decode(nuevo) < 0))) {
+                        && ((Integer.parseInt(nuevo) > 23) || (Integer.parseInt(nuevo) < 0))) {
                     txtHoras.setText("00");
                 }
             } catch (NumberFormatException nfe) {
@@ -126,17 +126,17 @@ public class TemporizadorUIController implements Initializable {
             }
         });
         txtMinutos.textProperty().addListener((obs, viejo, nuevo) -> {
-//            System.out.println("Estoy comprobando si hay más de dos dígitos");
+//            System.out.println("Estoy en los minutos -- " + nuevo);
             valorModificado.set(true);
             try {
+//                System.out.println("Valor: " + Integer.parseInt(nuevo));
                 if (nuevo.length() > 2) {
                     txtMinutos.setText(viejo);
                 } else if ((nuevo.length() != 0)
-                        && ((Integer.decode(nuevo) > 59) || (Integer.decode(nuevo) < 0))) {
+                        && (Integer.parseInt(nuevo) > 59)) {
                     txtMinutos.setText("00");
                 }
             } catch (NumberFormatException nfe) {
-                System.out.println("Excepción de formato de número");
                 txtMinutos.setText("00");
             }
         });
@@ -146,8 +146,7 @@ public class TemporizadorUIController implements Initializable {
             try {
                 if (nuevo.length() > 2) {
                     txtSegundos.setText(viejo);
-                } else if ((nuevo.length() != 0)
-                        && ((Integer.decode(nuevo) > 59) || (Integer.decode(nuevo) < 0))) {
+                } else if ((nuevo.length() != 0) && (Integer.parseInt(nuevo) > 59)) {
                     txtSegundos.setText("00");
                 }
             } catch (NumberFormatException nfe) {
@@ -160,38 +159,41 @@ public class TemporizadorUIController implements Initializable {
                     if (!newValue && txtHoras.getText().isEmpty()) {
                         txtHoras.setText("00");
                     } else {
-                        if (Integer.decode(txtHoras.getText()) < 10) {
+                        if (Integer.parseInt(txtHoras.getText()) < 10) {
                             txtHoras.setText("0" + txtHoras.getText());
                         }
                     }
                 });
         txtMinutos.focusedProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (!newValue && txtMinutos.getText().isEmpty()) {
-                        txtMinutos.setText("00");
+                    if (newValue) {
+                        //foco ganado
+                        System.out.println("Foco ganado");
+                        //txtMinutos.setText("00");
                     } else {
-                        if (Integer.decode(txtMinutos.getText()) < 10) {
+                        //Foco perdido
+                        System.out.println("Foco perdido");
+                        if (Integer.parseInt(txtMinutos.getText()) < 10) {
                             txtMinutos.setText("0" + txtMinutos.getText());
-                        }
+                        }                        
                     }
                 });
         txtSegundos.focusedProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (!newValue && txtSegundos.getText().isEmpty()) {
-                        txtSegundos.setText("00");
-                    } else {
-                        if (Integer.decode(txtSegundos.getText()) < 10) {
-                            txtSegundos.setText("0" + txtSegundos.getText());
-                        }
-                    }
-                });
-    }
+                            .addListener((observable, oldValue, newValue) -> {
+                                if (!newValue && txtSegundos.getText().isEmpty()) {
+                                    txtSegundos.setText("00");
+                                } else {
+                                    if (Integer.parseInt(txtSegundos.getText()) < 10) {
+                                        txtSegundos.setText("0" + txtSegundos.getText());
+                                    }
+                                }
+                            });
+                }
+                /**
+                 * Reproduce el sonido por defecto En este caso de una sirena.
+                 * TODO: reproducir sonido incluido en resources/sounds
+                 */
 
-    /**
-     * Reproduce el sonido por defecto
-     * En este caso de una sirena.
-     * TODO: reproducir sonido incluido en resources/sounds
-     */
     private void reproducirSonido() {
         try {
             //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -206,13 +208,13 @@ public class TemporizadorUIController implements Initializable {
             System.out.println("Error cargando sonido: " + ex);
         }
     }
-    
+
 //-----------------------------------------------------------------------------
 // ACCIONES DE LOS BOTONES
 //-----------------------------------------------------------------------------
     /**
-     * Inicia la cuenta atrás de temporizador o la pausa
-     * Establecer el icono de los botones por código mediante un imageView
+     * Inicia la cuenta atrás de temporizador o la pausa Establecer el icono de
+     * los botones por código mediante un imageView
      *
      * @param event
      */
@@ -232,24 +234,26 @@ public class TemporizadorUIController implements Initializable {
             tl.pause();
         }
     }
-    
+
     /**
      * Establece el valor puesto en los configuradores en el temporizador.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void btnLoadAction(ActionEvent event) {
-        tiempoTemporizador.setHora(Integer.decode(txtHoras.getText()));
-        tiempoTemporizador.setMinutos(Integer.decode(txtMinutos.getText()));
-        tiempoTemporizador.setSegundos(Integer.decode(txtSegundos.getText()));
+        tiempoTemporizador.setHora(Integer.parseInt(txtHoras.getText()));
+        tiempoTemporizador.setMinutos(Integer.parseInt(txtMinutos.getText()));
+        tiempoTemporizador.setSegundos(Integer.parseInt(txtSegundos.getText()));
         tiempoTemporizador.setEstablecido(true);
         lbContador.setText(tiempoTemporizador.toString());
     }
 
     /**
-     * Resetea todos los valores a 0, tanto de configuradores 
-     *   como del temporizador
-     * @param event 
+     * Resetea todos los valores a 0, tanto de configuradores como del
+     * temporizador
+     *
+     * @param event
      */
     @FXML
     private void btnResetAction(ActionEvent event) {
