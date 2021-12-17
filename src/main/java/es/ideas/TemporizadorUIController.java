@@ -196,11 +196,8 @@ public class TemporizadorUIController implements Initializable {
 
     private void reproducirSonido() {
         try {
-            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-            //      getClass().getResourceAsStream("sounds/sirena.wav"));
-
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                    new File("sirena.wav").getAbsoluteFile());
+                  getClass().getResource("sounds/sirena.wav"));
             soundClip = AudioSystem.getClip();
             soundClip.open(audioInputStream);
             soundClip.start();
@@ -222,6 +219,7 @@ public class TemporizadorUIController implements Initializable {
     private void btnIniciarAccion(ActionEvent event) {
 //        System.out.println("Botón play");
         //Obtener el hijo 0 del botón (imageView)
+        //TODO: Se puede poner un id al ImageView del botón y acceder directamente
         ImageView iv = (ImageView) btnIniciar.getChildrenUnmodifiable().get(0);
         if (btnIniciar.isSelected()) {
             iv.setImage(new Image(TemporizadorUIController.class
