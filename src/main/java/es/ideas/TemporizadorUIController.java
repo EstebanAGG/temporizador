@@ -5,7 +5,6 @@
 package es.ideas;
 
 import es.ideas.model.Tiempo;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -166,10 +165,10 @@ public class TemporizadorUIController implements Initializable {
                 });
         txtMinutos.focusedProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue) {
+                    if (!newValue && txtMinutos.getText().isEmpty()) {
                         //foco ganado
                         System.out.println("Foco ganado");
-                        //txtMinutos.setText("00");
+                        txtMinutos.setText("00");
                     } else {
                         //Foco perdido
                         System.out.println("Foco perdido");
