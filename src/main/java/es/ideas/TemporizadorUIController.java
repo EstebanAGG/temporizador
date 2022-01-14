@@ -7,7 +7,10 @@ package es.ideas;
 import es.ideas.model.Tiempo;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -55,10 +58,14 @@ public class TemporizadorUIController implements Initializable {
     private Tiempo tiempoTemporizador;
     //Línea de tiempo para poder ir actualizando el temporizador.
     private Timeline tl;
+    //Líneas de tiempo para el reloj
+    private Timeline tlRelojPrincipal, tlRelojSecundaria;
     //Propiedad para controlar cuándo se ha modificado alguno de los valores
     private BooleanProperty valorModificado;
     //Atributo para el sonido
     private Clip soundClip;
+    @FXML
+    private Label lblHora;
 
     /**
      * Initializes the controller class.
@@ -72,12 +79,51 @@ public class TemporizadorUIController implements Initializable {
         valorModificado = new SimpleBooleanProperty(false);
         tiempoTemporizador = new Tiempo();
 
+        /*
+         * Se crea un TimeLine para calcular la desviación de 1 seg en el que 
+         * nos encontramos. 
+         *    |---- 1 seg ----||--u--inicioTimeLine--deltaU--|
+         *   u        = tiempoMilisegundos % 1000
+         * deltaU     = 1000 - u
+         * u + deltaU = 1
+         * Posteriormente se lanza el segundo TimeLine que se ejecuta
+         *  cada segundo exactamente y va actualizando el reloj
+         * 
+         */
+        //Clase para dar el formato adecuado a la hora actual
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+
+        tlRelojPrincipal = new Timeline();
+        tlRelojSecundaria = new Timeline();
+        //Para que se repita indefinidamente
+        tlRelojSecundaria.setCycleCount(Animation.INDEFINITE);
+        //Key Frame Línea de Tiempo Secundaria
+        KeyFrame kfRelojSecundaria = new KeyFrame(
+                Duration.seconds(1),
+                event -> {
+                    lblHora.setText(formatoHora.format(System.currentTimeMillis()));
+                }
+        );
+        tlRelojSecundaria.getKeyFrames().add(kfRelojSecundaria);
+        //Key Frame Línea de Tiempo Primaria
+        KeyFrame kfRelojPrincipal = new KeyFrame(
+                new Duration(1000 - (System.currentTimeMillis() % 1000)),
+                (event) -> {
+                    lblHora.setText(formatoHora.format(System.currentTimeMillis()));
+                    tlRelojSecundaria.play();
+                }
+        );
+        tlRelojPrincipal.getKeyFrames().add(kfRelojPrincipal);
+        //Inicio del TimeLine principal
+        tlRelojPrincipal.play();
+
         //Creación de una nueva línea de tiempo para poder actualizar el temporizador
         tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         //Keyframe para indicar lo que se debe hacer cada cierto tiempo
         final KeyFrame kf = new KeyFrame(Duration.seconds(1), (event) -> {
             //String hora= LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
             if (!tiempoTemporizador.restaUnSegundo()) {
                 lbContador.textProperty().set(tiempoTemporizador.toString());
             } else {
@@ -87,6 +133,7 @@ public class TemporizadorUIController implements Initializable {
                 ImageView iv = (ImageView) btnIniciar.getChildrenUnmodifiable().get(0);
                 iv.setImage(new Image(TemporizadorUIController.class
                         .getResourceAsStream("pictures/play.png")));
+                btnIniciar.selectedProperty().set(false);
             }
         });
         //Añadir los keyFrames a la línea de tiempo
@@ -174,29 +221,30 @@ public class TemporizadorUIController implements Initializable {
                         System.out.println("Foco perdido");
                         if (Integer.parseInt(txtMinutos.getText()) < 10) {
                             txtMinutos.setText("0" + txtMinutos.getText());
-                        }                        
+                        }
                     }
                 });
         txtSegundos.focusedProperty()
-                            .addListener((observable, oldValue, newValue) -> {
-                                if (!newValue && txtSegundos.getText().isEmpty()) {
-                                    txtSegundos.setText("00");
-                                } else {
-                                    if (Integer.parseInt(txtSegundos.getText()) < 10) {
-                                        txtSegundos.setText("0" + txtSegundos.getText());
-                                    }
-                                }
-                            });
-                }
-                /**
-                 * Reproduce el sonido por defecto En este caso de una sirena.
-                 * TODO: reproducir sonido incluido en resources/sounds
-                 */
+                .addListener((observable, oldValue, newValue) -> {
+                    if (!newValue && txtSegundos.getText().isEmpty()) {
+                        txtSegundos.setText("00");
+                    } else {
+                        if (Integer.parseInt(txtSegundos.getText()) < 10) {
+                            txtSegundos.setText("0" + txtSegundos.getText());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * Reproduce el sonido por defecto En este caso de una sirena. TODO:
+     * reproducir sonido incluido en resources/sounds
+     */
 
     private void reproducirSonido() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                  getClass().getResource("sounds/sirena.wav"));
+                    getClass().getResource("sounds/sirena.wav"));
             soundClip = AudioSystem.getClip();
             soundClip.open(audioInputStream);
             soundClip.start();

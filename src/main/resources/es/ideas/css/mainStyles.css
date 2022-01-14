@@ -25,6 +25,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-size: 5em;
 }
 
+.hora{
+    -fx-font-size: 3em;
+}
+
 .button{
    /* -fx-graphic: url('../pictures/play.png');*/
 }
