@@ -8,7 +8,6 @@ import es.ideas.model.Tiempo;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -32,9 +31,11 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * FXML Controller class
+ * Clase controladora de temporizadorUI.fxml
  *
- * @author deymian
+ * @since 1.0
+ * @author Esteban A. Giménez
+ * @see <a href="https://github.com/EstebanAGG">Cuenta de GitHub</a> 
  */
 public class TemporizadorUIController implements Initializable {
 
@@ -53,25 +54,44 @@ public class TemporizadorUIController implements Initializable {
     private TextField txtSegundos;
     @FXML
     private Button btnLoad;
-
-    //Atributo del modelo de datos para llevar el valor del temporizador
-    private Tiempo tiempoTemporizador;
-    //Línea de tiempo para poder ir actualizando el temporizador.
-    private Timeline tl;
-    //Líneas de tiempo para el reloj
-    private Timeline tlRelojPrincipal, tlRelojSecundaria;
-    //Propiedad para controlar cuándo se ha modificado alguno de los valores
-    private BooleanProperty valorModificado;
-    //Atributo para el sonido
-    private Clip soundClip;
     @FXML
     private Label lblHora;
 
     /**
-     * Initializes the controller class.
+     * Objeto del modelo de datos para llevar el valor del temporizador
+    */
+    public Tiempo tiempoTemporizador;
+    /**
+     * Línea de tiempo para poder ir actualizando el temporizador.
+    */
+    private Timeline tl;
+    /**
+     * Línea de tiempo para actualizar el reloj (*comentar en clase*)
+    */
+    private Timeline tlRelojPrincipal, tlRelojSecundaria;
+    /**
+     * Propiedad para controlar cuándo se ha modificado alguno de los valores
+    */
+    private BooleanProperty valorModificado;
+    /**
+     * Atributo para el sonido
+    */
+    private Clip soundClip;
+
+    /**
+     * Inicialización de la clase controladora. 
+     * <p>
+     * Se crea un TimeLine para calcular la desviación de 1 seg en el que 
+     * nos encontramos. <p> 
+     *    |---- 1 seg ----||--u--inicioTimeLine--deltaU--|  <p>
+     *   u        = tiempoMilisegundos % 1000               <p>
+     * deltaU     = 1000 - u                                <p>
+     * u + deltaU = 1                                       <p>
+     * Posteriormente se lanza el segundo TimeLine que se ejecuta
+     *  cada segundo exactamente y va actualizando el reloj
      *
-     * @param url
-     * @param rb
+     * @param url Url del fichero fxml
+     * @param rb Fichero de recursos (para internacionalización)
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -214,11 +234,11 @@ public class TemporizadorUIController implements Initializable {
                 .addListener((observable, oldValue, newValue) -> {
                     if (!newValue && txtMinutos.getText().isEmpty()) {
                         //foco ganado
-                        System.out.println("Foco ganado");
+                        //System.out.println("Foco ganado");
                         txtMinutos.setText("00");
                     } else {
                         //Foco perdido
-                        System.out.println("Foco perdido");
+                        //System.out.println("Foco perdido");
                         if (Integer.parseInt(txtMinutos.getText()) < 10) {
                             txtMinutos.setText("0" + txtMinutos.getText());
                         }
@@ -240,7 +260,6 @@ public class TemporizadorUIController implements Initializable {
      * Reproduce el sonido por defecto En este caso de una sirena. TODO:
      * reproducir sonido incluido en resources/sounds
      */
-
     private void reproducirSonido() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
