@@ -127,7 +127,7 @@ public class TemporizadorUIController implements Initializable {
         tlRelojSecundaria.getKeyFrames().add(kfRelojSecundaria);
         //Key Frame Línea de Tiempo Primaria
         KeyFrame kfRelojPrincipal = new KeyFrame(
-                new Duration(1000 - (System.currentTimeMillis() % 1000)),
+                new Duration(1000f - (System.currentTimeMillis() % 1000)),
                 (event) -> {
                     lblHora.setText(formatoHora.format(System.currentTimeMillis()));
                     tlRelojSecundaria.play();
